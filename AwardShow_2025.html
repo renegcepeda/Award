@@ -46,24 +46,29 @@
       width: 800px;
       height: 300px;
       margin: 30px auto;
-      background-color: #ddd;
+      background-color: #000000;
       border-radius: 10px;
       overflow: hidden;
     }
-    .moving-div {
+   .moving-div {
       position: absolute;
       width: 100px;
       height: 100px;
       border-radius: 20px;
       opacity: 0.75;
       cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
+
     /* Evenly distributed positions within an 800px container */
-    .moving-div:nth-child(1) { background-color: rgba(255, 0, 0, 0.75); top: 100px; left: 50px; }
-    .moving-div:nth-child(2) { background-color: rgba(0, 0, 255, 0.75); top: 100px; left: 200px; }
-    .moving-div:nth-child(3) { background-color: rgba(0, 255, 0, 0.75); top: 100px; left: 350px; }
-    .moving-div:nth-child(4) { background-color: rgba(255, 255, 0, 0.75); top: 100px; left: 500px; }
-    .moving-div:nth-child(5) { background-color: rgba(128, 0, 128, 0.75); top: 100px; left: 650px; }
+    .moving-div:nth-child(1) { background-image: url('K-COSMOSIS.jpg'); top: 100px; left: 50px; }
+    .moving-div:nth-child(2) { background-image: url('Touch_Love.jpg'); top: 100px; left: 200px; }
+    .moving-div:nth-child(3) { background-image: url('opening_closing.jpg'); top: 100px; left: 350px; }
+    .moving-div:nth-child(4) { background-image: url('IMG_0220.jpg'); top: 100px; left: 500px; }
+    .moving-div:nth-child(5) { background-image: url('Dong_Xuan.jpg'); top: 100px; left: 650px; }
+
 
     /* GIF container – fixed to 800px wide */
     .gif-container {
@@ -188,10 +193,10 @@
 
   <!-- Moving Divs Section -->
   <div class="moving-container">
-    <div class="moving-div" onclick="startMoving(this, '0wAPTChtt3s')"></div>
-    <div class="moving-div" onclick="startMoving(this, 'JE3WHo4xeQU')"></div>
-    <div class="moving-div" onclick="startMoving(this, 'lAYZgfcWDPc')"></div>
-    <div class="moving-div" onclick="startMoving(this, 'F24tWdniGHk')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'dd3Lgbhm8ic')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'Y6MrF873Azo')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'G2QJyanCHc0')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'LWLgyrq_PpM')"></div>
     <div class="moving-div" onclick="startMoving(this, '3sdOxI_tPos')"></div>
   </div>
 
@@ -234,33 +239,34 @@
     let videoVisible = false;
 
     const videoData = {
-        "0wAPTChtt3s": {
-            title: "Video Title 1",
-            artist: "[Artist Name]",
-            year: "[Year]",
-            media: "[Media Type]",
+        "dd3Lgbhm8ic": {
+            title: "K-COSMOSIS",
+            artist: "Bomi Yook",
+            year: "2024",
+            media: "Video",
+            description: "K-COSMOSIS explores the blended nature of cosmologies within Korean metaphysics. </br>Weaving an intricate tale of relationality, the piece brings together multiple narratives across time and space, celebrating a multifaceted understanding of history, identity, ideology, and mythology. Viewers experience the synthesis of a divided yet intra-related universe, where perceived boundaries are blurred, and things and thoughts are not independently formed but emerged out of entanglement with a plurality of others. </br>Informed by the Feminist and Queer philosophies of quantum physics, the piece uses procedurally-generated particle systems to imagine the world through an ongoing blending. K-COSMOSIS invites viewers to see the world through osmosis rather than duality to reveal a profound sharedness and connection."
+        },
+        "Y6MrF873Azo": {
+            title: "Touch / Love",
+            artist: "Ruby Que",
+            year: "2025",
+            media: "Digital Video",
             description: "[Description]"
         },
-        "JE3WHo4xeQU": {
-            title: "Video Title 2",
-            artist: "[Artist Name]",
-            year: "[Year]",
-            media: "[Media Type]",
-            description: "[Description]"
+        "G2QJyanCHc0": {
+            title: "Opening/Closing",
+            artist: "X.A. Li",
+            year: "2022",
+            media: "Single-channel video, sound, custom software",
+            description: "The New York Stock Exchange invites companies to mark the beginning and end of each trading day by ringing a brass bell. Each video is preserved online, forming an enduring record of institutional capital. Ecstatic representatives wordlessly fulfill the same role, clapping alongside the bell’s sharp blare. </br>Opening/Closing collapses this ritual into a feverish duration, depicting a swelling mass of celebrants all cheering without end as logos and slogans shift interchangeably in the background. The bell is centered as the primary visual constant, its repetitive ringing growing loud and dissonant. These scenes dissolve into NOAA footage of the 2010 Deepwater Horizon spill over which faint traces of the executives linger, clapping all the same. In these twice-daily moments of total exuberance, effluent petroleum in disturbed waters seems distant and disjoint. Yet their entanglement across time and geography is undeniably total, continuing in countless forms both documented and invisible this exact moment."
         },
-        "lAYZgfcWDPc": {
-            title: "Video Title 3",
-            artist: "[Artist Name]",
-            year: "[Year]",
-            media: "[Media Type]",
-            description: "[Description]"
-        },
-        "F24tWdniGHk": {
-            title: "Video Title 4",
-            artist: "[Artist Name]",
-            year: "[Year]",
-            media: "[Media Type]",
-            description: "[Description]"
+        "LWLgyrq_PpM": {
+            title: "IMG_0220: Physical Preservations of a Once-Lost Internet Video (Teaser)",
+            artist: "Meshal Al-Obaidallah",
+            year: "2023",
+            media: "Multimedia Archive",
+            link: "https://my.matterport.com/show/?m=hXU5VzbtAvx&play=1&title=1&tourcta=1&vrcoll=0&dh=1&mt=1",
+            description: "A common misconception is that everything on the Internet stays there forever. However, some media is deleted and lost without a trace. </br>“IMG_0220” is an appropriation of old found footage from the Internet, following its recovery from a personal archive. In the age of digital file sharing, audiences become authors and distributors, by copying, editing, and recirculating media. On the Internet, copies transcend; provenance is trivialized. “IMG_0220” is not on the Internet anymore (discounting the website: www.img0220.com). The original video—circa 2016(?)—is from Saudi social media. A saved copy of the video was found on an old iPhone. The video was then clipped to 7 seconds, looped, captioned, and stylized with stock media. All done as means to re-enter circulation. </br>Although the original video is only a few years old, it feels from the distant past—the ‘90s or ‘00s. It is reminiscent of the previous dominant narrative. It represents the changing times in the sociopolitical landscape of Saudi Arabia. </br>The artwork, “IMG_0220,” is a deliberate anachronism in both content and form: digital media on analog tapes. It is stored in different formats: audio cassettes, VHS tapes, and 9 still images. They are all post-Internet physical preservations of the once-lost video. </br>In the “IMG_0220” library, visitors are invited to sit, read, and watch. It hosts the archive of videos, photos, tapes, booklets, postcards and more. Visitors can browse the materials on display. Via QR codes, all materials are downloadable on the website. As a traveling library around the world, it mimics the spread of Internet media and memes in real life. </br>Now “IMG_0220” is publicly available again, as both a traveling library and a multimedia website. Audiences are invited to not only consume these pieces of media, but to actively reflect and re-share."
         },
         "3sdOxI_tPos": {
             title: "Dong Xuan",
@@ -298,6 +304,11 @@
             } else {
                 // Populate video label details dynamically
                 const videoInfo = videoData[videoId];
+                let linkHTML = "";
+                // Conditionally add the link if it exists (only for the special video)
+                if (videoInfo.link) {
+                  linkHTML = `<p><strong>Explore:</strong> <a href="${videoInfo.link}" target="_blank">View Matterport Tour</a></p>`;
+                }
                 document.getElementById('videoContainer').innerHTML = `
                     <iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
                     <button class="close-btn" onclick="closeVideo()">Close</button>
@@ -306,6 +317,7 @@
                         <p><strong>Artist:</strong> ${videoInfo.artist}</p>
                         <p><strong>Year:</strong> ${videoInfo.year}</p>
                         <p><strong>Media:</strong> ${videoInfo.media}</p>
+                        ${linkHTML}
                         <p><strong>Description:</strong> ${videoInfo.description}</p>
                     </div>
                 `;
@@ -319,7 +331,27 @@
     function closeVideo() {
         document.getElementById('videoContainer').style.display = 'none';
         videoVisible = false;
+
+        // Reset moving div positions to their original home positions.
+        const divs = document.querySelectorAll('.moving-div');
+        if (divs.length >= 5) {
+            divs[0].style.top = "100px";
+            divs[0].style.left = "50px";
+
+            divs[1].style.top = "100px";
+            divs[1].style.left = "200px";
+
+            divs[2].style.top = "100px";
+            divs[2].style.left = "350px";
+
+            divs[3].style.top = "100px";
+            divs[3].style.left = "500px";
+
+            divs[4].style.top = "100px";
+            divs[4].style.left = "650px";
+        }
     }
+
 
     // p5.js Orbit Animation Code
     let planets = [];
