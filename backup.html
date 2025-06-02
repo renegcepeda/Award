@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Divs with Logo, Text, GIF & Orbit Animation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      overflow: auto; /* Allows scrolling */
+      margin: 0;
+      padding: 0 200px;
+      text-align: center;
+      background-color: black;
+      color: white;
+    }
+
+    /* Logo container */
+    .logo-container {
+      width: 100%;
+      padding: 20px;
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo-container img {
+      width: 100px;
+      height: 100px;
+    }
+
+    /* Text container */
+    .text-container {
+      margin: 20px auto;
+      width: 80%;
+      padding: 20px;
+      background-color: #eee;
+      border-radius: 10px;
+      font-size: 16px;
+      color: black;
+    }
+
+    /* Moving div container – fixed to 800px wide */
+    .moving-container {
+      position: relative;
+      width: 800px;
+      height: 300px;
+      margin: 30px auto;
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .moving-div {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      opacity: 0.75;
+      cursor: pointer;
+    }
+    /* Evenly distributed positions within an 800px container */
+    .moving-div:nth-child(1) { background-color: rgba(255, 0, 0, 0.75); top: 100px; left: 50px; }
+    .moving-div:nth-child(2) { background-color: rgba(0, 0, 255, 0.75); top: 100px; left: 200px; }
+    .moving-div:nth-child(3) { background-color: rgba(0, 255, 0, 0.75); top: 100px; left: 350px; }
+    .moving-div:nth-child(4) { background-color: rgba(255, 255, 0, 0.75); top: 100px; left: 500px; }
+    .moving-div:nth-child(5) { background-color: rgba(128, 0, 128, 0.75); top: 100px; left: 650px; }
+
+    /* GIF container – fixed to 800px wide */
+    .gif-container {
+      margin: 20px auto;
+      width: 800px;
+      background-color: #444;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .gif-container img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    /* Artwork label for the GIF */
+    .gif-label {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      text-align: left;
+      width: 100%;
+    }
+    .gif-label h2, 
+    .gif-label p {
+      margin: 5px 10px;
+    }
+
+    /* Orbit animation container */
+    .orbit-container {
+      width: 600px;
+      height: 600px; /* Ensures visibility */
+      margin: 20px auto;
+      display: flex; /* Centers content */
+      justify-content: center;
+      align-items: center;
+      background-color: #222;
+    }
+    /* Orbit animation label */
+    .orbit-label {
+      margin: 10px auto 30px auto;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 5px;
+      width: 600px;
+      text-align: left;
+      font-size: 16px;
+    }
+    .orbit-label h2, 
+    .orbit-label p {
+      margin: 5px 10px;
+    }
+
+    /* Video popup container */
+    .video-container {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      z-index: 100;
+    }
+    .video-container iframe {
+      width: 560px;
+      height: 315px;
+    }
+    .close-btn {
+      display: block;
+      margin: 15px auto;
+      padding: 12px 20px;
+      font-weight: bold;
+      background: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    /* Video label for the popup */
+    .video-label {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 5px;
+      width: 560px;
+      color: white;
+      font-size: 16px;
+      text-align: left;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .video-label h2,
+    .video-label p {
+      margin: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo Section -->
+  <div class="logo-container">
+    <img src="https://via.placeholder.com/100" alt="Logo">
+  </div>
+
+  <!-- Text Section -->
+  <div class="text-container">
+    <p>Here you can add your 170 words or any other content.</p>
+  </div>
+
+  <!-- Moving Divs Section -->
+  <div class="moving-container">
+    <div class="moving-div" onclick="startMoving(this, '0wAPTChtt3s')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'JE3WHo4xeQU')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'lAYZgfcWDPc')"></div>
+    <div class="moving-div" onclick="startMoving(this, 'F24tWdniGHk')"></div>
+    <div class="moving-div" onclick="startMoving(this, '3sdOxI_tPos')"></div>
+  </div>
+
+  <!-- GIF Section with Artwork Label -->
+  <div class="gif-container">
+    <img src="3_360-Sacred Figures.gif" alt="Sacred Figures GIF">
+    <div class="gif-label">
+      <h2>Title: Sacred Figures</h2>
+      <p><strong>Artist:</strong> [Artist Name]</p>
+      <p><strong>Year:</strong> [Year]</p>
+      <p><strong>Media:</strong> [Media Type]</p>
+      <p><strong>Description:</strong> [Description]</p>
+    </div>
+  </div>
+
+  <!-- Orbit Animation Section -->
+  <div class="orbit-container"></div>
+  <div class="orbit-label">
+    <h2>Title: Orbit Animation</h2>
+    <p><strong>Artist:</strong> [Artist Name]</p>
+    <p><strong>Year:</strong> [Year]</p>
+    <p><strong>Media:</strong> [Media Type]</p>
+    <p><strong>Description:</strong> [Description]</p>
+  </div>
+
+  <!-- Video Popup Container (pre-existing element) -->
+  <div id="videoContainer" class="video-container">
+    <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+    <button class="close-btn" onclick="closeVideo()">Close</button>
+    <div class="video-label">
+      <h2>Title: [Video Title]</h2>
+      <p><strong>Artist:</strong> [Artist Name]</p>
+      <p><strong>Year:</strong> [Year]</p>
+      <p><strong>Media:</strong> [Media Type]</p>
+      <p><strong>Description:</strong> [Description]</p>
+    </div>
+  </div>
+
+  <script>
+    let videoVisible = false;
+
+    const videoData = {
+        "0wAPTChtt3s": {
+            title: "Video Title 1",
+            artist: "[Artist Name]",
+            year: "[Year]",
+            media: "[Media Type]",
+            description: "[Description]"
+        },
+        "JE3WHo4xeQU": {
+            title: "Video Title 2",
+            artist: "[Artist Name]",
+            year: "[Year]",
+            media: "[Media Type]",
+            description: "[Description]"
+        },
+        "lAYZgfcWDPc": {
+            title: "Video Title 3",
+            artist: "[Artist Name]",
+            year: "[Year]",
+            media: "[Media Type]",
+            description: "[Description]"
+        },
+        "F24tWdniGHk": {
+            title: "Video Title 4",
+            artist: "[Artist Name]",
+            year: "[Year]",
+            media: "[Media Type]",
+            description: "[Description]"
+        },
+        "3sdOxI_tPos": {
+            title: "Dong Xuan",
+            artist: "[Artist Name]",
+            year: "[Year]",
+            media: "[Media Type]",
+            description: "[Description]"
+        }
+    };
+
+    function startMoving(div, videoId) {
+        if (videoVisible) return;
+
+        let speedX = -(Math.random() * 3 + 2);
+        let speedY = Math.random() * 4 - 2;
+        let maxDistance = 400;
+        let traveled = 0;
+
+        function moveDiv() {
+            let currentLeft = div.offsetLeft;
+            let currentTop = div.offsetTop;
+            let container = document.querySelector('.moving-container');
+            let maxWidth = container.offsetWidth - div.offsetWidth;
+            let maxHeight = container.offsetHeight - div.offsetHeight;
+
+            if (traveled < maxDistance) {
+                if (currentLeft >= maxWidth || currentLeft <= 0) speedX *= -1;
+                if (currentTop >= maxHeight || currentTop <= 0) speedY *= -1;
+
+                div.style.left = (currentLeft + speedX) + 'px';
+                div.style.top = (currentTop + speedY) + 'px';
+
+                traveled += Math.abs(speedX) + Math.abs(speedY);
+                requestAnimationFrame(moveDiv);
+            } else {
+                // Populate video label details dynamically
+                const videoInfo = videoData[videoId];
+                document.getElementById('videoContainer').innerHTML = `
+                    <iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                    <button class="close-btn" onclick="closeVideo()">Close</button>
+                    <div class="video-label">
+                        <h2>Title: ${videoInfo.title}</h2>
+                        <p><strong>Artist:</strong> ${videoInfo.artist}</p>
+                        <p><strong>Year:</strong> ${videoInfo.year}</p>
+                        <p><strong>Media:</strong> ${videoInfo.media}</p>
+                        <p><strong>Description:</strong> ${videoInfo.description}</p>
+                    </div>
+                `;
+                document.getElementById('videoContainer').style.display = 'block';
+                videoVisible = true;
+            }
+        }
+        moveDiv();
+    }
+
+    function closeVideo() {
+        document.getElementById('videoContainer').style.display = 'none';
+        videoVisible = false;
+    }
+
+    // p5.js Orbit Animation Code
+    let planets = [];
+    let coreX, coreY;
+
+    function setup() {
+      let canvas = createCanvas(600, 600);
+      canvas.parent(document.querySelector('.orbit-container'));
+      coreX = width / 2;
+      coreY = height / 2;
+      angleMode(DEGREES);
+      frameRate(10);
+      for (let i = 0; i < 5; i++) {
+        planets[i] = new Planet(random(0.15, 0.55));
+      }
+    }
+
+    function draw() {
+      background(0);
+      for (let i = 0; i < planets.length; i++) {
+        strokeWeight(1);
+        noFill();
+        ellipseMode(CENTER);
+        stroke(255, 50);
+        ellipse(coreX, coreY, 135 + i * 62);
+        strokeWeight(random(1, 3));
+        stroke(255, 125);
+        let spotX = [100, 378, 565, 49, 102];
+        let spotY = [235, 49, 478, 100, 532];
+        point(spotX[i], spotY[i]);
+        planets[i].appear(i);
+      }
+      fill(255);
+      textSize(12);
+      textStyle(BOLD);
+      textAlign(CENTER);
+      noStroke();
+      text('memory', coreX, coreY);
+    }
+
+    class Planet {
+      constructor(speed) {
+        this.d = 50;
+        this.a = 0;
+        this.words = ['stays', 'you', 'move', 'time', 'flows'];
+        this.p = speed;
+      }
+      appear(idx) {
+        push();
+        translate(coreX, coreY);
+        rotate(this.a);
+        this.a += this.p;
+        noStroke();
+        fill(255);
+        textSize(10);
+        text(this.words[idx], this.d + idx * 35, this.d);
+        pop();
+      }
+    }
+  </script>
+</body>
+</html>
