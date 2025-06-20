@@ -6,72 +6,76 @@
   <title>Header/Footer Gallery: New Media Exhibition</title>
   <!-- p5.js for Orbit Animation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-  <!-- Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Yeseva+One&display=swap" rel="stylesheet">
   <style>
-
-    /* Global Styles */
-    /* Global Typography Styles */
+    /* Global Settings */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111B22; /* Our chosen bluish-black */
+      overflow-x: hidden;
+    }
+    /* Fixed star container that spans the viewport and sits behind all other content */
+    #star-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none; /* Allow clicks on content above */
+      z-index: -1;
+    }
+    /* Global Typography */
     h1 {
       font-family: 'Yeseva One', serif;
       font-weight: 400;
+      color: #fff;
+      margin: 0;
     }
     p {
       font-family: 'Josefin Sans', sans-serif;
       font-optical-sizing: auto;
       font-weight: 400;
       font-style: normal;
+      line-height: 1.8;
+      margin-bottom: 2em;
+      color: #DBA988; /* Warm text color */
     }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #2c3e50, #bdc3c7);
-      overflow-x: hidden;
-      color: #fff;
-    }
+    /* Header (Gallery Logo & Exhibition Text) */
     header {
       text-align: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.7);
+      background-color: rgba(22, 44, 58, 0.5); /* 50% transparent #162C3A */
       position: relative;
       z-index: 3000;
-    }
-    /* Gallery Logo */
-    .logo-container {
-      margin-bottom: 10px;
     }
     .logo-container img {
       width: 120px;
       height: auto;
     }
-    /* Exhibition Opening Text */
     .exhibition-text {
       max-width: 800px;
       margin: 0 auto;
       text-align: left;
       font-size: 1.1em;
       line-height: 1.5em;
+      color: #fff;
     }
-    .exhibition-text p {
-      margin: 10px 0;
-    }
-
-    /* Rotating Video Gallery Container */
+    /* Rotating Video Gallery */
     #videoGallery {
       position: relative;
       width: 500px;
       height: 500px;
       margin: 40px auto;
       border-radius: 50%;
-      /* The gallery rotates continuously */
       animation: rotateGallery 20s linear infinite;
       transform-style: preserve-3d;
       z-index: 4000;
     }
-    /* Each gallery item (video thumbnail) is positioned around a circle */
     .gallery-item {
       position: absolute;
       top: 50%;
@@ -88,27 +92,16 @@
     .gallery-item:hover {
       transform: scale(1.1);
     }
-    /* Arrange five items around the circle */
-    .gallery-item:nth-child(1) {
-      transform: rotate(0deg) translate(200px) rotate(0deg);
-    }
-    .gallery-item:nth-child(2) {
-      transform: rotate(72deg) translate(200px) rotate(-72deg);
-    }
-    .gallery-item:nth-child(3) {
-      transform: rotate(144deg) translate(200px) rotate(-144deg);
-    }
-    .gallery-item:nth-child(4) {
-      transform: rotate(216deg) translate(200px) rotate(-216deg);
-    }
-    .gallery-item:nth-child(5) {
-      transform: rotate(288deg) translate(200px) rotate(-288deg);
-    }
+    /* Arrange five items evenly around the circle */
+    .gallery-item:nth-child(1) { transform: rotate(0deg) translate(200px) rotate(0deg); }
+    .gallery-item:nth-child(2) { transform: rotate(72deg) translate(200px) rotate(-72deg); }
+    .gallery-item:nth-child(3) { transform: rotate(144deg) translate(200px) rotate(-144deg); }
+    .gallery-item:nth-child(4) { transform: rotate(216deg) translate(200px) rotate(-216deg); }
+    .gallery-item:nth-child(5) { transform: rotate(288deg) translate(200px) rotate(-288deg); }
     @keyframes rotateGallery {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-
     /* Animated GIF Section */
     .gif-container {
       width: 800px;
@@ -127,8 +120,8 @@
     .gif-label {
       margin-top: 10px;
       font-size: 1em;
+      color: #fff;
     }
-
     /* Orbit Animation Section */
     .orbit-container {
       width: 600px;
@@ -147,12 +140,9 @@
       border-radius: 5px;
       text-align: left;
       font-size: 1em;
+      color: #fff;
     }
-    .orbit-label p {
-      margin: 5px 10px;
-    }
-
-    /* Video Modal Popup */
+    /* Video Modal Popup with Details */
     #modal {
       position: fixed;
       top: 50%;
@@ -168,10 +158,29 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.8);
       text-align: center;
     }
+    #modal #modalContent {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    #modal #videoEmbedContainer {
+      width: 100%;
+    }
     #modal iframe {
       width: 100%;
       height: 400px;
       border: none;
+    }
+    #modal #videoDetails {
+      margin: 10px 0;
+      text-align: left;
+      color: #fff;
+    }
+    #modal #videoDetails h2 {
+      margin: 0 0 10px;
+      font-family: 'Yeseva One', serif;
+    }
+    #modal #videoDetails p {
+      margin: 5px 0;
     }
     #modal .close-btn {
       margin-top: 10px;
@@ -183,45 +192,54 @@
       font-size: 1em;
       cursor: pointer;
     }
+    #modal #externalLinkBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #3498db;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    /* Star styles */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #ffeaa7; /* slightly yellowish */
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <!-- Header: Gallery Logo & Exhibition Opening Text -->
+  <!-- Fixed Star Background Container -->
+  <div id="star-container"></div>
+  
+  <!-- Header: Gallery Logo & Exhibition Text -->
   <header>
     <div class="logo-container">
       <img src="https://via.placeholder.com/120x120.png?text=Gallery+Logo" alt="Gallery Logo" />
     </div>
-    <h1>Welcome to the New Media Caucus' 2025 Award Exhibition</h1>
+    <h1>New Media Caucus &amp; Header/Footer Gallery</h1>
     <div class="exhibition-text">
-      <p>
-        For the last six years the New Media Caucus has dedicated itself to support BIPOC
-        students, artists and academics in their pursuit of professional excellence. As part
-        of these efforts, the Judson‑Morrissey Excellence in New Media Award (students) and the
-        Vagner Mendonça‑Whitehead Microgrant Fund (artists and scholars at any stage) were
-        created as a way to live up to this mission and give back to the community. As part
-        of the award, the winners are also given visibility through members spotlights, and the
-        annual awards exhibition you are about to experience.
-      </p>
-      <p>
-        This year, our winners represent a variety of heritages, identities and ideologies, making
-        this exhibition an eclectic one—a characteristic this show chose to embrace rather than
-        impose a top‑down narrative. Connecting themes of identity, memory, childhood, metaphysics,
-        and digital ephemerality amongst other concepts, these artists pour out themselves into their
-        work to give us a vibrant display of their talents and themselves.
-      </p>
-      <p>
-        All of us at New Media Caucus and Header/Footer Gallery want to thank you for your continued
-        support and donations that allow us to continue to platform and financially support artists for
-        years to come.
-      </p>
+      <p>For the last six years the New Media Caucus has dedicated itself to support BIPOC students, artists and academics in their pursuit of professional excellence. As part of these efforts, the Judson‑Morrissey Excellence in New Media Award (students) and the Vagner Mendonça‑Whitehead Microgrant Fund (artists and scholars at any stage) were created as a way to live up to this mission and give back to the community. As part of the award, the winners are also given visibility through members spotlights, and the annual awards exhibition you are about to experience.</p>
+      <p>This year, our winners represent a variety of heritages, identities and ideologies, making this exhibition an eclectic one—a characteristic this show chose to embrace rather than impose a top‑down narrative. Connecting themes of identity, memory, childhood, metaphysics, and digital ephemerality amongst other concepts, these artists pour out themselves into their work to give us a vibrant display of their talents and themselves.</p>
+      <p>All of us at New Media Caucus and Header/Footer Gallery want to thank you for your continued support and donations that allow us to continue to platform and financially support artists for years to come.</p>
     </div>
   </header>
-
+  
   <!-- Rotating Video Gallery Section -->
   <div id="videoGallery">
-    <!-- Gallery items are created dynamically in the script below -->
+    <!-- Gallery items will be generated dynamically below -->
   </div>
-
+  
   <!-- Animated GIF Section -->
   <div class="gif-container">
     <img src="3_360-Sacred%20Figures.gif" alt="Animated Sacred Figures" />
@@ -230,84 +248,142 @@
       <p>An animated depiction capturing the ephemeral nature of modern memory.</p>
     </div>
   </div>
-
+  
   <!-- Orbit Animation Section -->
   <div class="orbit-container"></div>
   <div class="orbit-label">
     <h2>Orbit Animation</h2>
     <p>Watch as elements revolve and dance—symbolizing the passage of time and shifting narratives.</p>
   </div>
-
-  <!-- Video Modal Popup -->
+  
+  <!-- Video Modal Popup with Details -->
   <div id="modal">
-    <iframe id="videoFrame" src="" allowfullscreen></iframe>
-    <button class="close-btn" onclick="closeModal()">Close Video</button>
+    <div id="modalContent">
+      <div id="videoEmbedContainer">
+        <iframe id="videoFrame" src="" allowfullscreen></iframe>
+      </div>
+      <div id="videoDetails"></div>
+      <button id="externalLinkBtn" style="display:none;">Open External Video</button>
+      <button class="close-btn" onclick="closeModal()">Close Video</button>
+    </div>
   </div>
-
+  
   <script>
-    // Video Data: Define five video entries with YouTube IDs and background images
+    /********************
+     * Video Data Object (Detailed Content)
+     ********************/
     const videoData = {
-      "video1": {
-        title: "Cosmic Voyage",
-        youtubeId: "dd3Lgbhm8ic",
-        background: "url('K-COSMOSIS.jpg')"
+      "dd3Lgbhm8ic": {
+        title: "K-COSMOSIS",
+        artist: "Bomi Yook",
+        year: "2024",
+        media: "Video",
+        description:
+          "<p>K-COSMOSIS explores the blended nature of cosmologies within Korean metaphysics. </p> <p>Weaving an intricate tale of relationality, the piece brings together multiple narratives across time and space, celebrating a multifaceted understanding of history, identity, ideology, and mythology. Viewers experience the synthesis of a divided yet intra-related universe, where perceived boundaries are blurred, and things and thoughts are not independently formed but emerged out of entanglement with a plurality of others. </p> <p>Informed by the Feminist and Queer philosophies of quantum physics, the piece uses procedurally-generated particle systems to imagine the world through an ongoing blending. K-COSMOSIS invites viewers to see the world through osmosis rather than duality to reveal a profound sharedness and connection.</p>"
       },
-      "video2": {
-        title: "Touch of Love",
-        youtubeId: "Y6MrF873Azo",
-        background: "url('Touch_Love.jpg')"
+      "Y6MrF873Azo": {
+        title: "Touch / Love",
+        artist: "Ruby Que",
+        year: "2025",
+        media: "Digital Video",
+        description: "[Description]"
       },
-      "video3": {
-        title: "Transitions",
-        youtubeId: "Fc2JmRCVf4",
-        background: "url('opening_closing.jpg')"
+      "-Fc2JmRCVf4": {
+        title: "Opening/Closing",
+        artist: "X.A. Li",
+        year: "2022",
+        media: "Single-channel video, sound, custom software",
+        description:
+          "The New York Stock Exchange invites companies to mark the beginning and end of each trading day by ringing a brass bell. Each video is preserved online, forming an enduring record of institutional capital. Ecstatic representatives wordlessly fulfill the same role, clapping alongside the bell’s sharp blare. </br>Opening/Closing collapses this ritual into a feverish duration, depicting a swelling mass of celebrants all cheering without end as logos and slogans shift interchangeably in the background. The bell is centered as the primary visual constant, its repetitive ringing growing loud and dissonant. These scenes dissolve into NOAA footage of the 2010 Deepwater Horizon spill over which faint traces of the executives linger, clapping all the same. In these twice-daily moments of total exuberance, effluent petroleum in disturbed waters seems distant and disjoint. Yet their entanglement across time and geography is undeniably total, continuing in countless forms both documented and invisible this exact moment."
       },
-      "video4": {
-        title: "Archived Memories",
-        youtubeId: "LWLgyrq_PpM",
-        background: "url('IMG_0220.jpg')"
+      "LWLgyrq_PpM": {
+        title: "IMG_0220: Physical Preservations of a Once-Lost Internet Video (Teaser)",
+        artist: "Meshal Al-Obaidallah",
+        year: "2023",
+        media: "Multimedia Archive",
+        link: "https://my.matterport.com/show/?m=hXU5VzbtAvx&play=1&title=1&tourcta=1&vrcoll=0&dh=1&mt=1",
+        description:
+          "A common misconception is that everything on the Internet stays there forever. However, some media is deleted and lost without a trace. </br>“IMG_0220” is an appropriation of old found footage from the Internet, following its recovery from a personal archive. In the age of digital file sharing, audiences become authors and distributors, by copying, editing, and recirculating media. On the Internet, copies transcend; provenance is trivialized. “IMG_0220” is not on the Internet anymore (discounting the website: www.img0220.com). The original video—circa 2016(?)—is from Saudi social media. A saved copy of the video was found on an old iPhone. The video was then clipped to 7 seconds, looped, captioned, and stylized with stock media. All done as means to re-enter circulation. </br>Although the original video is only a few years old, it feels from the distant past—the ‘90s or ‘00s. It is reminiscent of the previous dominant narrative. It represents the changing times in the sociopolitical landscape of Saudi Arabia. </br>The artwork, “IMG_0220,” is a deliberate anachronism in both content and form: digital media on analog tapes. It is stored in different formats: audio cassettes, VHS tapes, and 9 still images. They are all post-Internet physical preservations of the once-lost video. </br>In the “IMG_0220” library, visitors are invited to sit, read, and watch. It hosts the archive of videos, photos, tapes, booklets, postcards and more. Visitors can browse the materials on display. Via QR codes, all materials are downloadable on the website. As a traveling library around the world, it mimics the spread of Internet media and memes in real life. </br>Now “IMG_0220” is publicly available again, as both a traveling library and a multimedia website. Audiences are invited to not only consume these pieces of media, but to actively reflect and re-share."
       },
-      "video5": {
-        title: "Reimagined Narratives",
-        youtubeId: "_dTwdpU3Mtw",
-        background: "url('Dong_Xuan.jpg')"
+      "_dTwdpU3Mtw": {
+        title: "Dong Xuan",
+        artist: "Zhiwan Cheung",
+        year: "2024",
+        media: "AI Mediated Video",
+        description:
+          "Dong Xuan offers a reinterpretation of the classic German fairy tale Hansel and Gretel, weaving through physical, geographical, digital, and linguistic landscapes. The video takes its name from a Berlin-based Vietnamese market, whose construction was inspired by Hanoi's Dong Xuan Market, the largest indoor market in Vietnam. Filmed within this culturally hybrid space, performers of German-Asian heritage navigate an ersatz forest, amidst aisles laden with synthetic plants. This blending of dislocated objects, narratives, and settings invites a reexamination of history and memory, echoing the way artificial intelligence disrupts traditional narratives in our globally fractured world. By intertwining various cultural threads, Dong Xuan seeks to offer a fresh perspective on complex historical narratives, reflecting on our collective existence in a manner that challenges and expands upon conventional understandings. </br>In this project, artificial intelligence served as a pivotal tool in reimagining the concepts of transitions and cuts, thereby transforming the narrative flow within the video. Utilizing Pika Labs, I fed a series of still images into the AI, each differing slightly in configuration. This process initiated a degradation and morphing of images into one another, emblematic of a journey through a digital limbo. As the video progresses, these shifts become more pronounced, mirroring the increasing disorientation of the characters wandering adrift into an abstract, latent space. </br>This AI-mediated process turned scene transitions into transformative passages, allowing viewers to witness the imagery's dissolution and reformation, representing the narrative's vivid and digital depths. The collaboration between human creativity and AI's generative unpredictability not only challenged and enriched my video-making process but also broadened my understanding of storytelling in the digital era."
       }
     };
-
-    // Create gallery items (video thumbnails) in a circular layout
+    
+    /********************
+     * Generate Rotating Video Gallery Items
+     ********************/
     const galleryContainer = document.getElementById('videoGallery');
     Object.keys(videoData).forEach(key => {
       const vid = videoData[key];
-      let div = document.createElement('div');
+      const div = document.createElement('div');
       div.className = "gallery-item";
-      div.style.backgroundImage = vid.background;
-      // When clicked, open the video modal
+      // Use YouTube's thumbnail for the video (or a fallback color)
+      div.style.backgroundImage = "url('https://img.youtube.com/vi/" + key + "/hqdefault.jpg')";
       div.addEventListener("click", (e) => {
         e.stopPropagation();
-        openModal(vid.youtubeId);
+        openModal(key);
       });
       galleryContainer.appendChild(div);
     });
-
-    // Modal Functions: Open and close the video popup
+    
+    /********************
+     * Video Modal Functions with Details
+     ********************/
     const modal = document.getElementById('modal');
     const videoFrame = document.getElementById('videoFrame');
-
-    function openModal(youtubeId) {
-      videoFrame.src = "https://www.youtube.com/embed/" + youtubeId + "?autoplay=1";
+    const videoDetails = document.getElementById('videoDetails');
+    const externalLinkBtn = document.getElementById('externalLinkBtn');
+    
+    function openModal(key) {
+      const video = videoData[key];
+      
+      // Build the details HTML
+      let detailsHTML = `<h2>${video.title}</h2>
+        <p><strong>Artist:</strong> ${video.artist}</p>
+        <p><strong>Year:</strong> ${video.year}</p>
+        <p><strong>Media:</strong> ${video.media}</p>
+        <p>${video.description}</p>`;
+      videoDetails.innerHTML = detailsHTML;
+      
+      // Check if there's an external link:
+      if (video.link) {
+        // Hide the video embed and show the external link button.
+        document.getElementById("videoEmbedContainer").style.display = "none";
+        externalLinkBtn.style.display = "block";
+        externalLinkBtn.onclick = function() {
+          window.open(video.link, "_blank");
+        }
+        // Clear any src in the iframe.
+        videoFrame.src = "";
+      } else {
+        // Show the video embed and hide the external link button.
+        document.getElementById("videoEmbedContainer").style.display = "block";
+        externalLinkBtn.style.display = "none";
+        videoFrame.src = "https://www.youtube.com/embed/" + key + "?autoplay=1";
+      }
       modal.style.display = "block";
     }
+    
     function closeModal() {
       modal.style.display = "none";
+      // Clear the iframe src so the video stops
       videoFrame.src = "";
     }
-
-    // p5.js Orbit Animation Code
+    
+    /********************
+     * p5.js Orbit Animation Code
+     ********************/
     let planets = [];
     let coreX, coreY;
     function setup() {
       let canvas = createCanvas(600, 600);
-      canvas.parent(document.querySelector(".orbit-container"));
+      canvas.parent(document.querySelector('.orbit-container'));
       coreX = width / 2;
       coreY = height / 2;
       angleMode(DEGREES);
@@ -356,6 +432,26 @@
         text(this.words[idx], this.d + idx * 35, this.d);
         pop();
       }
+    }
+    
+    /********************
+     * Fixed Star Background Generation
+     ********************/
+    const starContainer = document.getElementById('star-container');
+    const numStars = 150;
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      // Randomly position stars to cover the visible viewport
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      // Randomize animation duration for natural twinkling effect
+      star.style.animationDuration = (1 + Math.random() * 2) + "s";
+      // Optionally vary star size a bit
+      const size = 1 + Math.random() * 2;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+      starContainer.appendChild(star);
     }
   </script>
 </body>
