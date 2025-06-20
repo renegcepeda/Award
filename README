@@ -2,9 +2,9 @@
    Use Spotlight (`Cmd + Space`) and search for "Terminal".
 
 2. **Navigate to the Project Directory**
-   cd ~/Desktop/Awards
+   cd ~/Desktop/Award
 
 git add .
-git commit -m "Update: made changes to AwardShow_2025, backup, and added README"
+git commit -m "Complete redesign, archived prior version under folder OLD"
 git push
 
