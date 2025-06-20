@@ -276,57 +276,76 @@
             description: "Dong Xuan offers a reinterpretation of the classic German fairy tale Hansel and Gretel, weaving through physical, geographical, digital, and linguistic landscapes. The video takes its name from a Berlin-based Vietnamese market, whose construction was inspired by Hanoi's Dong Xuan Market, the largest indoor market in Vietnam. Filmed within this culturally hybrid space, performers of German-Asian heritage navigate an ersatz forest, amidst aisles laden with synthetic plants. This blending of dislocated objects, narratives, and settings invites a reexamination of history and memory, echoing the way artificial intelligence disrupts traditional narratives in our globally fractured world. By intertwining various cultural threads, Dong Xuan seeks to offer a fresh perspective on complex historical narratives, reflecting on our collective existence in a manner that challenges and expands upon conventional understandings. </br>In this project, artificial intelligence served as a pivotal tool in reimagining the concepts of transitions and cuts, thereby transforming the narrative flow within the video. Utilizing Pika Labs, I fed a series of still images into the AI, each differing slightly in configuration. This process initiated a degradation and morphing of images into one another, emblematic of a journey through a digital limbo. As the video progresses, these shifts become more pronounced, mirroring the increasing disorientation of the characters wandering adrift into an abstract, latent space. </br>This AI-mediated process turned scene transitions into transformative passages, allowing viewers to witness the imagery's dissolution and reformation, representing the narrative's vivid and digital depths. The collaboration between human creativity and AI's generative unpredictability not only challenged and enriched my video-making process but also broadened my understanding of storytelling in the digital era."
         }
     };
+function startMoving(div, videoId) {
+    if (videoVisible) return;
 
-    function startMoving(div, videoId) {
-        if (videoVisible) return;
+    // Set random speeds
+    let speedX = -(Math.random() * 3 + 2);
+    let speedY = Math.random() * 4 - 2;
+    let maxDistance = 400;
+    let traveled = 0;
 
-        let speedX = -(Math.random() * 3 + 2);
-        let speedY = Math.random() * 4 - 2;
-        let maxDistance = 400;
-        let traveled = 0;
+    // Get container and dimensions
+    const container = document.querySelector('.moving-container');
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const divWidth = div.offsetWidth;
+    const divHeight = div.offsetHeight;
+    
+    // Randomize initial position within safe bounds
+    div.style.left = Math.floor(Math.random() * (containerWidth - divWidth)) + 'px';
+    div.style.top = Math.floor(Math.random() * (containerHeight - divHeight)) + 'px';
 
-        function moveDiv() {
-            let currentLeft = div.offsetLeft;
-            let currentTop = div.offsetTop;
-            let container = document.querySelector('.moving-container');
-            let maxWidth = container.offsetWidth - div.offsetWidth;
-            let maxHeight = container.offsetHeight - div.offsetHeight;
+    function moveDiv() {
+        // Current positions relative to container in pixels
+        let currentLeft = div.offsetLeft;
+        let currentTop = div.offsetTop;
 
-            if (traveled < maxDistance) {
-                if (currentLeft >= maxWidth || currentLeft <= 0) speedX *= -1;
-                if (currentTop >= maxHeight || currentTop <= 0) speedY *= -1;
-
-                div.style.left = (currentLeft + speedX) + 'px';
-                div.style.top = (currentTop + speedY) + 'px';
-
-                traveled += Math.abs(speedX) + Math.abs(speedY);
-                requestAnimationFrame(moveDiv);
-            } else {
-                // Populate video label details dynamically
-                const videoInfo = videoData[videoId];
-                let linkHTML = "";
-                // Conditionally add the link if it exists (only for the special video)
-                if (videoInfo.link) {
-                  linkHTML = `<p><strong>Explore:</strong> <a href="${videoInfo.link}" target="_blank">View Matterport Tour</a></p>`;
-                }
-                document.getElementById('videoContainer').innerHTML = `
-                    <iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                    <button class="close-btn" onclick="closeVideo()">Close</button>
-                    <div class="video-label">
-                        <h2>Title: ${videoInfo.title}</h2>
-                        <p><strong>Artist:</strong> ${videoInfo.artist}</p>
-                        <p><strong>Year:</strong> ${videoInfo.year}</p>
-                        <p><strong>Media:</strong> ${videoInfo.media}</p>
-                        ${linkHTML}
-                        <p><strong>Description:</strong> ${videoInfo.description}</p>
-                    </div>
-                `;
-                document.getElementById('videoContainer').style.display = 'block';
-                videoVisible = true;
+        if (traveled < maxDistance) {
+            // Bounce off left/right boundaries
+            if (currentLeft + speedX <= 0 || currentLeft + divWidth + speedX >= containerWidth) {
+                speedX *= -1;
             }
+            // Bounce off top/bottom boundaries
+            if (currentTop + speedY <= 0 || currentTop + divHeight + speedY >= containerHeight) {
+                speedY *= -1;
+            }
+
+            // Update position
+            div.style.left = (currentLeft + speedX) + 'px';
+            div.style.top = (currentTop + speedY) + 'px';
+
+            // Log for debugging purposes
+            console.log(`Left: ${div.offsetLeft}, Top: ${div.offsetTop}, speedX: ${speedX}, speedY: ${speedY}`);
+
+            traveled += Math.abs(speedX) + Math.abs(speedY);
+            requestAnimationFrame(moveDiv);
+        } else {
+            // Populate video label details dynamically
+            const videoInfo = videoData[videoId];
+            let linkHTML = "";
+            if (videoInfo.link) {
+                linkHTML = `<p><strong>Explore:</strong> <a href="${videoInfo.link}" target="_blank">View Matterport Tour</a></p>`;
+            }
+            document.getElementById('videoContainer').innerHTML = `
+                <iframe id="videoFrame" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                <button class="close-btn" onclick="closeVideo()">Close</button>
+                <div class="video-label">
+                    <h2>Title: ${videoInfo.title}</h2>
+                    <p><strong>Artist:</strong> ${videoInfo.artist}</p>
+                    <p><strong>Year:</strong> ${videoInfo.year}</p>
+                    <p><strong>Media:</strong> ${videoInfo.media}</p>
+                    ${linkHTML}
+                    <p><strong>Description:</strong> ${videoInfo.description}</p>
+                </div>
+            `;
+            document.getElementById('videoContainer').style.display = 'block';
+            videoVisible = true;
         }
-        moveDiv();
     }
+    moveDiv();
+}
+
 
     function closeVideo() {
         document.getElementById('videoContainer').style.display = 'none';
